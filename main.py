@@ -59,7 +59,7 @@ class Perl(pygame.sprite.Sprite):
 class Asteroid(pygame.sprite.Sprite):
     def __init__(self):
         pygame.sprite.Sprite.__init__(self)
-        self.image = pygame.image.load("Asteroid.gif")
+        self.image = pygame.image.load("Asteroid.png")
         self.image = self.image.convert()
         self.rect = self.image.get_rect()
         self.health = 100
@@ -77,6 +77,7 @@ class Asteroid(pygame.sprite.Sprite):
     
     def reset(self):
         self.rect.left = 640
+        self.image = pygame.image.load("Asteroid.png")
         self.image = pygame.transform.scale(self.image, (random.randrange(130, 200), random.randrange(130, 200)))
         self.rect.centery = random.randrange(0, screen.get_height())
         self.dy = random.randrange(-2, 2)
@@ -164,6 +165,7 @@ def game():
 
     clock = pygame.time.Clock()
     keepGoing = True
+    asteroidsDestroyed = 0
     fireTimer = 0
     while keepGoing:
         clock.tick(30)
@@ -252,6 +254,7 @@ def game():
                 theLaser.reset()
             if asteroid1.health < 1:
                 asteroid1.reset()
+                asteroidsDestroyed += 1
                 
         blastAsteroid2 = pygame.sprite.spritecollide(asteroid2, LaserSprites, False)
         if blastAsteroid2:
@@ -261,6 +264,7 @@ def game():
                 theLaser.reset()
             if asteroid2.health < 1:
                 asteroid2.reset()
+                asteroidsDestroyed += 1
         
         blastAsteroid3 = pygame.sprite.spritecollide(asteroid3, LaserSprites, False)
         if blastAsteroid3:
@@ -270,6 +274,7 @@ def game():
                 theLaser.reset()
             if asteroid3.health < 1:
                 asteroid3.reset()
+                asteroidsDestroyed += 1
         
         LaserSprites.update()
         friendSprites.update()
@@ -322,9 +327,10 @@ def titleScreen():
             if event.type == pygame.QUIT:
                 keepGoing = False
                 donePlaying = True
-            if event.type == pygame.MOUSEBUTTONDOWN:
-                keepGoing = False
-                donePlaying = False
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_RETURN:
+                    keepGoing = False
+                    donePlaying = False
             elif event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_ESCAPE:
                     keepGoing = False
