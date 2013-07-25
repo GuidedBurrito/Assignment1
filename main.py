@@ -25,12 +25,11 @@ class Ship(pygame.sprite.Sprite):
             self.sndMusic.play(-1)
         
     def update(self):
-        mousex, mousey = pygame.mouse.get_pos()
-        if mousey < 30:
-            mousey = 30
+        if self.rect.bottom >= screen.get_width():
+            self.rect.center = (60, 30)
         
-        if mousey > 450:
-            mousey = 450
+        if self.rect.top <= screen.get_height() - screen.get_height() - self.rect.height:
+            self.rect.center = (60, 450)
             
         self.rect.center = (60, self.startingY)
                 
@@ -121,10 +120,10 @@ class Laser(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.firing = False
         self.dx = 5
+        self.currentY = 200
         
     def fire(self):
-        mousex, mousey = pygame.mouse.get_pos()
-        self.rect.centery = mousey
+        self.rect.centery = self.currentY
         self.rect.centerx = 60
         self.firing = True
         self.update()
@@ -136,7 +135,7 @@ class Laser(pygame.sprite.Sprite):
 
     def reset(self):
         mousex, mousey = pygame.mouse.get_pos()
-        self.rect.center = (60, mousey)
+        self.rect.center = (60, self.currentY)
     
 def game():
     pygame.display.set_caption("G-ALEX-Y!")
@@ -184,10 +183,49 @@ def game():
             laser6.fire()
             fireTimer = -25
         
+        keys = pygame.key.get_pressed()
+        
+        if keys[pygame.K_UP]:
+            if ship.rect.center == (60, 30):
+                ship.startingY = 30
+                laser1.currentY = 30
+                laser2.currentY = 30
+                laser3.currentY = 30
+                laser4.currentY = 30
+                laser5.currentY = 30
+                laser6.currentY = 30
+            else:
+                ship.startingY -= 5
+                laser1.currentY -= 5
+                laser2.currentY -= 5
+                laser3.currentY -= 5
+                laser4.currentY -= 5
+                laser5.currentY -= 5
+                laser6.currentY -= 5
+                ship.rect.center = (60, ship.startingY)
+            
+        if keys[pygame.K_DOWN]:
+            if ship.rect.center == (60, 450):
+                laser1.currentY = 450
+                laser2.currentY = 450
+                laser3.currentY = 450
+                laser4.currentY = 450
+                laser5.currentY = 450
+                laser6.currentY = 450
+                ship.startingY = 450
+            else:
+                ship.startingY += 5
+                laser1.currentY += 5
+                laser2.currentY += 5
+                laser3.currentY += 5
+                laser4.currentY += 5
+                laser5.currentY += 5
+                laser6.currentY += 5
+                ship.rect.center = (60, ship.startingY)
+        
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 keepGoing = False
-        
         #check collisions
         
         if ship.rect.colliderect(perl.rect):
