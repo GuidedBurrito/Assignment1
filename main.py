@@ -531,7 +531,7 @@ def game():
          'When the ship shoots an alien'
          blastAlien1 = pygame.sprite.spritecollide(alien1, LaserSprites, False)
          if blastAlien1:
-             alien1.health -= 20
+             alien1.health -= 100
              ship.sndThunder.play()
              for theLaser in blastAlien1:
                  theLaser.reset()
@@ -550,7 +550,7 @@ def game():
          'When the ship shoots an alien'         
          blastAlien2 = pygame.sprite.spritecollide(alien2, LaserSprites, False)
          if blastAlien2:
-             alien2.health -= 20
+             alien2.health -= 100
              ship.sndThunder.play()
              for theLaser in blastAlien2:
                  theLaser.reset()
@@ -569,7 +569,7 @@ def game():
          'When the ship shoots an alien'
          blastAlien3 = pygame.sprite.spritecollide(alien3, LaserSprites, False)
          if blastAlien3:
-             alien3.health -= 20
+             alien3.health -= 100
              ship.sndThunder.play()
              for theLaser in blastAlien3:
                  theLaser.reset()
@@ -869,16 +869,13 @@ def instructions():
     "",
     "                       Instructions",  
     '',
-    "     You are a space exploration ship",
-    "     traveling to undescovered planets.",
+    "     You are a space combat ship",
+    "     traveling through deep space.",
     "",
     "     Fly into artifacts to collect points,",
-    "     but be careful not to fly too close",    
-    "     to the asteroids. Your ship will ",
-    "     explode if it is hit by them too",
-    "     many times! Steer with your",
-    "     mouse to controll the ship.",
-    "",
+    "     shoot asteroids to move to level 2,",    
+    "     distroy the alien ship to battle the",
+    "     boss and win the game",
     "     click to start, escape to quit..."
     )
     
